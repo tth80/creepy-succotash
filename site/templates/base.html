@@ -9,9 +9,9 @@
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,500,300,700' rel='stylesheet' type='text/css'>
 
     <style type="text/css">
-        .starter-template { margin-top: 60px; }
+        #main-content { margin-top: 60px; }
 
-        body { background: #32383e; }
+        body { background: #32383e; color:#c0c0c0; }
 
         .navbar { background: #21272d; border:none; }
 
@@ -23,9 +23,11 @@
         .navbar a.navbar-brand span { color: #f0f0f0; }
 
         h1,h2,h3,h4,h5,h6 { color: #e0e0e0; text-shadow: 2px 2px 5px #202020; }
-        small { color: #a0a0a0; }
+        small { color: #909090; }
 
         /* #32383e hover */
+
+        .subinfo { margin-bottom:10px; }
     </style>
 </head>
 <body>
@@ -50,11 +52,14 @@
         </div>
     </nav>
 
-    <div class="container">
-        <div class="starter-template">
-            <h1>testing TESTING testing</h1>
-            {% block content %}{% endblock %}
-
+    <div class="container" id="main-content">
+        <div class="row">
+            <div class="col-md-8">
+                {% block content %}{% endblock %}
+            </div>
+            <div class="col-md-4">
+                {% block sidebar %}{% endblock %}
+            </div>
         </div>
     </div>
 

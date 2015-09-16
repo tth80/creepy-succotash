@@ -23,7 +23,10 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'taggit',
     'registration',
+
+    'blog',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -91,3 +94,5 @@ REGISTRATION_DEFAULT_EMAIL = "timo@example.com"
 REGISTRATION_EMAIL_HTML = True
 # Auto-login after activating?
 REGISTRATION_AUTO_LOGIN = False
+
+TAGGIT_CASE_INSENSITIVE = True
