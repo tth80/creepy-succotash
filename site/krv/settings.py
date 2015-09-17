@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 import os.path
 
-from .local_settings import (BASE_DIR, SECRET_KEY, DEBUG, 
+from .local_settings import (BASE_DIR, SECRET_KEY, DEBUG,
                              ALLOWED_HOSTS, DATABASES)
 
 # Application definition
@@ -23,6 +23,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'taggit',
     'registration',
 
@@ -85,9 +86,9 @@ STATIC_URL = '/static/'
 
 # Django-registration-redux
 
-# This is the number of days users will have to activate their accounts after 
-# registering. If a user does not activate within that period, the account 
-# will remain permanently inactive and may be deleted by maintenance scripts 
+# This is the number of days users will have to activate their accounts after
+# registering. If a user does not activate within that period, the account
+# will remain permanently inactive and may be deleted by maintenance scripts
 # provided in django-registration-redux.
 ACCOUNT_ACTIVATION_DAYS = 7
 REGISTRATION_DEFAULT_EMAIL = "timo@example.com"
