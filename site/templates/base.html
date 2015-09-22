@@ -28,6 +28,47 @@
         /* #32383e hover */
 
         .subinfo { margin-bottom:10px; }
+
+        ul.breadcrumbs {
+            list-style-type:none;
+            margin:0;padding:0;
+        }
+
+        ul.breadcrumbs > li { float:left; margin-right:0px; }
+
+        ul.breadcrumbs > li > a {
+            padding: 10px 10px 10px 30px;
+            display:block;
+            float:left;
+            margin-left:-25px; 
+            box-shadow:0px 0px 5px #000;
+        }
+
+        ul.breadcrumbs > li:first-Child > a { margin-left:0 !important; padding-left:10px !important; }
+
+        ul.breadcrumbs > li.active { 
+            display:block; margin: 5px 0 10px -20px; padding:5px 10px 5px 20px; 
+            color: #606060; background:#e0e0e0;
+            box-shadow:0px 0px 5px #000;
+        }
+
+        ul.breadcrumbs > li:nth-child(1) > a { background: #909090; color:#f0f0f0; }
+        ul.breadcrumbs > li:nth-child(1) > div { border-left-color: #909090; }
+
+        ul.breadcrumbs > li:nth-child(2) > a { background: #DB8814; }
+        ul.breadcrumbs > li:nth-child(2) > div { border-left-color: #DB8814; }
+
+        ul.breadcrumbs > li:nth-child(3) > a { background: green; }
+        ul.breadcrumbs > li:nth-child(3) > div { border-left-color: green; }
+
+        ul.breadcrumbs > li:nth-child(4) > a { background: gold; }
+        ul.breadcrumbs > li:nth-child(4) > div { border-left-color: gold; }
+
+        ul.breadcrumbs .arrow { 
+            position:relative; right:0px;
+            width:0;height:0;border-width:20px;
+            border-color:transparent transparent transparent #21272d;
+            border-style:solid; float:right; margin-right:-15px; }
     </style>
 </head>
 <body>
@@ -53,6 +94,15 @@
     </nav>
 
     <div class="container" id="main-content">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="breadcrumbs">
+                    <li class=""><a href="">Home</a><div class="arrow"></div></li>
+                    <li class="active">Home is where beer is</li>
+                </ul>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-md-8">
                 {% block content %}{% endblock %}

@@ -1,0 +1,16 @@
+        ul.breadcrumbs {
+            list-style-type:none;
+            margin:0;padding:0;
+        }
+
+        ul.breadcrumbs > li { float:left; overflow:auto; }
+        ul.breadcrumbs > li > a { display:block; background: #21272d; float:left; padding:5px;}
+
+        ul.breadcrumbs > li.active { display:block; margin: 5px; color: #6BACC2; }
+
+        ul.breadcrumbs .arrow { width:0;height:0;border-width:15px;
+            border-color:transparent transparent transparent black;
+            border-style:solid; float:right; margin-right:-20px; }
+
+        ul.breadcrumbs .arrow.a1 { border-left-color: #21272d !important; }
+
