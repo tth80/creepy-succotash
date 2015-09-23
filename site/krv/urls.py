@@ -22,5 +22,6 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^accounts/', include('registration.backends.default.urls')),
 
-    url(r'$', core.views.frontpage),
+    url(r'^blog/', include('blog.urls')),
+    url(r'^$', core.views.frontpage),
 ]

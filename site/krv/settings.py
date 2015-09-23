@@ -28,6 +28,7 @@ INSTALLED_APPS = (
     'taggit',
     'registration',
 
+    'core',
     'blog',
 )
 
