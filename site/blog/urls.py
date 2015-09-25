@@ -3,5 +3,5 @@ import blog.views
 
 
 urlpatterns = [
-    url(r'^(?P<slug>.+)/$', blog.views.post),
+    url(r'^(?P<slug>.+)/$', blog.views.post, name='blog_post'),
 ]

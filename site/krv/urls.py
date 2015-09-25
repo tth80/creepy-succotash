@@ -23,5 +23,6 @@ urlpatterns = [
     url(r'^accounts/', include('registration.backends.default.urls')),
 
     url(r'^blog/', include('blog.urls')),
+    url(r'^planner/', include('planner.urls')),
     url(r'^$', core.views.frontpage),
 ]

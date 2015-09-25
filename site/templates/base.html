@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load core_tags %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,12 +59,13 @@
     <div class="container" id="main-content">
         <div class="row">
             <div class="col-md-12">
+                {% get_breadcrumbs as breadcrumbs %}
                 <ul class="breadcrumbs">
-                    <li class=""><a href="">Home</a><div class="arrow"></div></li>
-                    <li class=""><a href="">Level 1</a><div class="arrow"></div></li>
-                    <li class=""><a href="">Level 2</a><div class="arrow"></div></li>
-                    <li class=""><a href="">Level 3</a><div class="arrow"></div></li>
-                    <li class="active">Home is where beer is</li>
+                    {% for crumb in breadcrumbs %}{% if not forloop.last %}
+                    <li class="{{ crumb.class }}"><a href="{{ crumb.url }}">{{ crumb.title }}</a><div class="arrow"></div></li>
+                    {% else %}
+                    <li class="active">{{ crumb.title }}</li>
+                    {% endif %}{% endfor %}
                 </ul>
             </div>
         </div>
@@ -87,4 +89,6 @@
             $('.main-content table').addClass('table');
         });
     </script>
+
+    {% block script %}{% endblock %}
 </body>
