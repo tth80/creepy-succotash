@@ -1,24 +1,77 @@
 {% extends "base.html" %}
 {% load humanize %}
-{% block content %}{% verbatim %}
-<div ng-app="PlannerApp" ng-controller="planController">
-<h1>Planner</h1>
-<article id="post{{ post.id }}">
-    <h2>{{ post.title }}</h2>
-    <div class="subinfo">
-        <small class="post_time">Posted: {{ post.created_at }} by <a class="author" href="">{{ post.author.username }}</a></small></div>
-    <p>{{ post.body }}</p>
-    <p><small>Tags: <a href="/blog/tags/{{ tag }}/">{{ tag }}</a>, </small></p>
-</article>
-<p>No plans! Create a new plan!</p>
-<button class="btn btn-primary" data-toggle="modal" data-target="#modalNew">Create</button>
+{% block head %}
+<style type="text/css">
+    .list-group li { background: #404040; border: 1px solid #303030; }
+    .list-group li.active { background: #606060; border: 1px solid #303030; }
+    .list-group li.list-group-item:hover {
+        background: #a0a0a0; border: 1px solid #303030;
+        color: #fff; text-decoration:underline;
+    }
+    .list-group li a { color: #a0a0a0; }
+    .list-group li.list-group-item:hover a { text-decoration:underline; color:#fff; }
 
+    .project h1 { margin-bottom:20px; }
+
+    .task-item { overflow:auto; }
+    .task-item strong { color:#f0f0f0; font-size: 20px; font-weight:normal; }
+    .task-item .task-title > small { display: none; }
+    .task-item .task-title:hover > small { display: inline; }
+
+    .task-item p { margin-left: 23px; }
+    .task-item small.info { margin-left: 23px; display:block; }
+
+    .task-number {
+        color: orange; font-size:50px; font-weight:bold;
+        float:left; clear:both; margin:-8px 10px 0 0;
+        text-shadow: 1px 1px 3px #000;
+    }
+
+    .task.title {
+
+    }
+
+    .task-item { margin-top: 25px; }
+</style>
+{% endblock %}
+{% block full_content %}{% verbatim %}
+<div class="row" ng-app="PlannerApp" ng-controller="planController" style="margin-top:20px;">
+    <div class="col-md-3">
+        <ul class="list-group">
+            <li class="list-group-item"
+                ng-repeat="proj in projects"
+                ng-class="{active:proj.active}"
+                ng-click="activate_project(proj.id);"><a href="">{{ proj.title }}</a></li>
+        </ul>
+
+        <a href="" style="display:block;width:100%;text-align:center;">Create a new plan</a>
+    </div>
+    <div class="col-md-6 project">
+        <h1>{{ active_project.title }}</h1>
+        <ol class="list-unstyled">
+            <li ng-repeat="item in active_project.tasks" class="task-item">
+                <div class="task-number">{{ $index+1 }}</div>
+
+                <div class="task-title">
+                    <strong>{{ item.title }}</strong> <small><a href="">edit</a></small>
+                </div>
+
+                <small class="info">type: idea | status: implemented</small>
+                <p>{{ item.text }}</p></li>
+        </ol>
+
+    </div>
+    <div class="col-md-3">
+        <button class="btn btn-primary" data-toggle="modal"
+            data-target="#modalNew">Create</button>
+    </div>
+</div>
 
 <div class="modal" id="modalNew" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" 
+                <button type="button" class="close" data-dismiss="modal"
                     arial-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="modalLabel">Modal Title</h4>
             </div>
@@ -32,10 +85,7 @@
         </div>
     </div>
 </div>
-
-
-</div>
-{% endverbatim %}{% endblock %}
+{% endverbatim %}{% endblock full_content %}
 {% block script %}
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.min.js"></script>
 <script type="text/javascript">
@@ -56,22 +106,35 @@ angular.module('PlannerApp.services', [])
 
 angular.module('PlannerApp.controllers', [])
 .controller('planController', function($scope, APIService) {
-    $scope.txt = "moi";
+    $scope.active_project = null;
+    $scope.activate_project = function(id) {
+        for(var i=0,len=$scope.projects.length;i<len;i++) {
+            $scope.projects[i].active = $scope.projects[i].id == id;
+            if($scope.projects[i].active) {
+                $scope.active_project = $scope.projects[i];
+            }
+        }
+    };
 
     $scope.projects = [
-        {id:1, title:'project 1', status:'incomplete', created_at:'2015-09-24T12:59:01+1000', tasks:[
-            {id:1, title:'subtask 1', type:'idea', status:'unknown'},
-            {id:2, title:'subtask 2', type:'task', status:'unknown'},
+        {id:1, title:'planner project', status:'incomplete', created_at:'2015-09-24T12:59:01+1000',
+            tasks:[
+            {id:1, title:'achievements', type:'idea', status:'unknown', 'text': 'Lorem ipsum dolor itet'},
+            {id:2, title:'edit in place', type:'task', status:'unknown'},
             {id:3, title:'subtask 3', type:'documentation', status:'unknown'},
             {id:4, title:'subtask 4', type:'specification', status:'unknown'},
             {id:5, title:'subtask 5', type:'', status:'unknown'},
         ]},
+        {id:2, title:'scheduler', status:'', created_at:'', tasks:[]},
+        {id:3, title:'map generator', status:'', created_at:'', tasks:[]},
+        {id:4, title:'tower defense', status:'', created_at:'', tasks:[]},
     ];
 
+    $scope.activate_project(1);
 });
 
 angular.module('PlannerApp', [
-    'PlannerApp.services', 
+    'PlannerApp.services',
     'PlannerApp.controllers']);
 
 </script>
