@@ -24,5 +24,6 @@ urlpatterns = [
 
     url(r'^blog/', include('blog.urls')),
     url(r'^planner/', include('planner.urls')),
+    url(r'^api/', include('core.api_urls')),
     url(r'^$', core.views.frontpage),
 ]

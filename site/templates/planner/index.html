@@ -35,7 +35,7 @@
 </style>
 {% endblock %}
 {% block full_content %}{% verbatim %}
-<div class="row" ng-app="PlannerApp" ng-controller="planController" style="margin-top:20px;">
+<div class="row" ng-controller="planController" style="margin-top:20px;">
     <div class="col-md-3">
         <ul class="list-group">
             <li class="list-group-item"
@@ -87,25 +87,9 @@
 </div>
 {% endverbatim %}{% endblock full_content %}
 {% block script %}
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.min.js"></script>
 <script type="text/javascript">
 
-angular.module('PlannerApp.services', [])
-.factory('APIService', function($http) {
-    var API = {};
-
-    API.fetch = function() {
-        return $http({
-            method:'JSONP',
-            url:'/',
-        });
-    };
-
-    return API;
-});
-
-angular.module('PlannerApp.controllers', [])
-.controller('planController', function($scope, APIService) {
+siteApp.controller('planController', function($scope, APIService) {
     $scope.active_project = null;
     $scope.activate_project = function(id) {
         for(var i=0,len=$scope.projects.length;i<len;i++) {
@@ -132,10 +116,6 @@ angular.module('PlannerApp.controllers', [])
 
     $scope.activate_project(1);
 });
-
-angular.module('PlannerApp', [
-    'PlannerApp.services',
-    'PlannerApp.controllers']);
 
 </script>
 {% endblock %}

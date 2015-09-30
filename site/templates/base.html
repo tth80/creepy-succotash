@@ -1,7 +1,7 @@
 {% load staticfiles %}
 {% load core_tags %}
 <!DOCTYPE html>
-<html>
+<html ng-app="SiteApp" ng-controller="siteController">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -78,6 +78,10 @@
                 {% block content %}{% endblock %}
             </div>
             <div class="col-md-4">
+                <div class="" ng-if="user.username">{% verbatim %}
+                    Hello {{ user.username }}!
+                {% endverbatim %}</div>
+
                 {% block sidebar %}{% endblock %}
             </div>
         </div>
@@ -93,6 +97,9 @@
             $('.main-content table').addClass('table');
         });
     </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.min.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
 
     {% block script %}{% endblock %}
 </body>

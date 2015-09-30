@@ -27,6 +27,7 @@ INSTALLED_APPS = (
 
     'taggit',
     'registration',
+    'rest_framework',
 
     'core',
     'blog',
