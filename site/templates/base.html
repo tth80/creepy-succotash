@@ -1,5 +1,6 @@
 {% load staticfiles %}
 {% load core_tags %}
+{% load i18n %}
 <!DOCTYPE html>
 <html ng-app="SiteApp" ng-controller="siteController">
 <head>
@@ -50,9 +51,24 @@
             </div>
             <div id="navbar" class="collapse navbar-collapse navbar-right">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li class="active"><a href="{% url 'frontpage' %}">{% trans "Home" %}</a></li>
+                    <li><a href="{% url 'planner:index' %}">{% trans "Planner" %}</a></li>
+                    <li><a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                        role="button" aria-haspopup="true"
+                        aria-expanded="false">{% trans "Blog" %} <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'blog:index' %}">{% trans "Blog index" %}</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li class="dropdown-header">{% trans "Featured posts" %}</li>
+
+                            {% get_featured_blog_posts as featured %}
+                            {% for fp in featured %}
+                            <li><a href="{% url 'blog:post' slug=fp.slug %}">{{ fp.title|truncatechars:25 }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    <li><a href="#about">{% trans "About" %}</a></li>
+                    <li><a href="#contact">{% trans "Contact" %}</a></li>
                 </ul>
             </div><!--/.nav-collapse -->
         </div>

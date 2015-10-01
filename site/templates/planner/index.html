@@ -91,17 +91,28 @@
 {% block script %}
 <script type="text/javascript">
 
-siteApp.controller('planController', function($scope, APIService) {
-    $scope.active_project = null;
-    $scope.activate_project = function(id) {
-        for(var i=0,len=$scope.projects.length;i<len;i++) {
-            $scope.projects[i].active = $scope.projects[i].id == id;
-            if($scope.projects[i].active) {
-                $scope.active_project = $scope.projects[i];
-            }
-        }
+siteApp.controller('planController', function($scope, APIService, $http) {
+    $scope.plans = function() {
+        return $http({method:'get', url:'api/plans/'});
     };
 
+    $scope.plan = function(id) {
+        return $http({method:'get', url:'api/plan/' + escape(id) + '/'});
+    };
+
+    $scope.active_project = null;
+    $scope.activate_project = function(id) {
+        $scope.plan(id).success(function(obj) {
+            $scope.active_project = obj;
+        });
+    };
+
+    $scope.plans().success(function(obj) {
+        $scope.projects = obj.plans;
+        $scope.activate_project($scope.projects[0].id);
+    });
+
+    /*
     $scope.projects = [
         {id:1, title:'planner project', status:'incomplete', created_at:'2015-09-24T12:59:01+1000',
             tasks:[
@@ -115,8 +126,9 @@ siteApp.controller('planController', function($scope, APIService) {
         {id:3, title:'map generator', status:'', created_at:'', tasks:[]},
         {id:4, title:'tower defense', status:'', created_at:'', tasks:[]},
     ];
+    */
 
-    $scope.activate_project(1);
+    //$scope.activate_project(1);
 });
 
 </script>

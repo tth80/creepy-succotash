@@ -22,8 +22,8 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^accounts/', include('registration.backends.default.urls')),
 
-    url(r'^blog/', include('blog.urls')),
-    url(r'^planner/', include('planner.urls')),
+    url(r'^blog/', include('blog.urls', namespace="blog")),
+    url(r'^planner/', include('planner.urls', namespace="planner")),
     url(r'^api/', include('core.api_urls')),
-    url(r'^$', core.views.frontpage),
+    url(r'^$', core.views.frontpage, name="frontpage"),
 ]

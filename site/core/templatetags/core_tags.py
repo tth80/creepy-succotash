@@ -19,6 +19,10 @@ def get_breadcrumbs(context):
 
     return [{'class': '', 'title': 'Home', 'url': '/'}] + _get_crumbs_for_path(path_parts)
 
+@register.assignment_tag()
+def get_featured_blog_posts():
+    # TODO: cache
+    return Post.objects.all().order_by('-created_at')[:5]
 
 def _get_crumbs_for_path(parts):
     if len(parts) == 0:

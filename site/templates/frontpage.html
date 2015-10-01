@@ -3,7 +3,7 @@
 {% block content %}
 {% for post in posts %}
 <article id="post{{ post.id }}">
-    <h2>{{ post.title }}</h2>
+    <h2><a href="{% url 'blog:post' slug=post.slug %}">{{ post.title }}</a></h2>
     <div class="subinfo">
         <small class="post_time">Posted: {{ post.created_at|naturaltime }} by <a class="author" href="">{{ post.author.username }}</a></small></div>
     <p>{{ post.body }}</p>
@@ -15,7 +15,7 @@
 {% block sidebar %}
 <ul class="list">
     {% for p in posts_sidebar %}
-    <li><a href="{{ p.get_absolute_url }}">{{ p.title }}</a><br />
+    <li><a href="{% url 'blog:post' slug=p.slug %}">{{ p.title }}</a><br />
         <div class="subinfo"><small>Posted: {{ p.created_at|naturaltime }} by <a href="">{{ p.author.username }}</a></small></div></li>
     {% endfor %}
 </ul>
