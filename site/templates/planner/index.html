@@ -62,6 +62,8 @@
 
     </div>
     <div class="col-md-3">
+        <h5>People associated in this plan</h5>
+
         <button class="btn btn-primary" data-toggle="modal"
             data-target="#modalNew">Create</button>
     </div>
@@ -105,9 +107,9 @@ siteApp.controller('planController', function($scope, APIService) {
             tasks:[
             {id:1, title:'achievements', type:'idea', status:'unknown', 'text': 'Lorem ipsum dolor itet'},
             {id:2, title:'edit in place', type:'task', status:'unknown'},
-            {id:3, title:'subtask 3', type:'documentation', status:'unknown'},
-            {id:4, title:'subtask 4', type:'specification', status:'unknown'},
-            {id:5, title:'subtask 5', type:'', status:'unknown'},
+            {id:3, title:'associated people', type:'documentation', status:'unknown'},
+            {id:4, title:'link associated', type:'specification', status:'unknown'},
+            {id:5, title:'share', type:'', status:'unknown'},
         ]},
         {id:2, title:'scheduler', status:'', created_at:'', tasks:[]},
         {id:3, title:'map generator', status:'', created_at:'', tasks:[]},
