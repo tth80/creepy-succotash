@@ -1,0 +1,119 @@
+{% extends "redtab/redtab_base.html" %}
+{% load staticfiles %}
+{% block head %}
+<style type="text/css">
+    .link-group > li { clear:both; overflow:auto; }
+    .link-group > li > img { float:left; margin-right:5px; }
+    .link-group > li > .detail { float:right; margin-left:5px; }
+
+    .link-group .subinfo { color:#808080; font-size:12px; }
+    .link-group .subinfo > strong { color:#175DBF; font-weight:normal; }
+
+    .link-group > li.list-group-item { background: #303030; border: 1px solid #252525; }
+    .link-group > li > a { color:white; font-weight:normal; text-decoration:none; }
+    .link-group > li > a:hover { text-decoration:underline; }
+
+    .link-group .detail { text-align:center; max-width:75px; color:#808080; font-size:12px; }
+    .link-group .detail > strong { color: #175DBF; font-weight:normal; border: 1px solid #252525; border-radius:3px; padding:3px; }
+
+</style>
+{% endblock %}
+{% block full_content %}
+    <div class="container" id="main-content" ng-controller="redtabController">
+        <div class="row">
+            <div class="col-xs-12 col-md-3">
+                <ul class="list-group link-group">
+                    <li ng-repeat="element in elements" class="list-group-item">
+                        <img src="{% static 'img/50x50.png' %}">
+                        {% verbatim %}
+                        <div class="detail">
+                            {{ element.data.score|score }} | {{ element.data.created_utc|nattime }}<br />
+                            <strong>{{ element.data.num_comments }}</strong>
+                        </div>
+                        <a href="" ng-click="comments(element.data)">
+                            {{ element.data.title }}
+                        </a><br />
+                        <span class="subinfo">
+                            <strong>{{ element.data.subreddit }}</strong> |
+                            {{ element.data.domain }} |
+                            {{ element.data.author }}
+                        </span>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-9" ng-if="false">
+                <ul>
+                    <li ng-repeat="comment in comments.data.children" ng-include="'comment.html'"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+<script type="text/ng-template" id="comment.html">
+    {{ comment.data.body }}
+    <hr />
+    <blockquote ng-if="comment.data.replies.data.children">
+        <ul>
+            <li ng-repeat="comment in comment.data.replies.data.children" ng-include="'comment.html'"></li>
+        </ul>
+    </blockquote>
+</script>
+{% endverbatim %}{% endblock %}
+{% block script %}
+<script type="text/javascript">
+
+siteApp.filter('nattime', function() {
+    return function(input) {
+        var c = new Date();
+        var d = new Date(0);
+        d.setUTCSeconds(input);
+
+        var cs = c.getTime() / 1000;
+        var ds = d.getTime() / 1000;
+        var diff = cs - ds;
+
+        if(diff < 60) return 'just now';
+        if(diff < 60*2) return '<2m';
+        if(diff < 60*5) return '<5m';
+        if(diff < 60*10) return '<10m';
+        if(diff < 60*15) return '<15m';
+        if(diff < 60*30) return '<30m';
+        if(diff < 60*60) return '<1h';
+
+        if(diff < 60*60*24) {
+            var hrs = Math.floor(diff / 60 / 60);
+            if(hrs > 10) return hrs + 'h';
+
+            var mins = diff - (hrs * 60 * 60);
+            return hrs + 'h ' + mins + 'm';
+        }
+
+        return 'x' + d + 'x';
+    };
+});
+
+siteApp.filter('score', function() {
+    return function(input) {
+        return input < 1000 ? input : (Math.round(input / 100) / 10) + 'k';
+    };
+});
+
+siteApp.controller('redtabController', function($scope, $http) {
+    $http({method:'get', url:'/static/programming.json'}).success(function(data) {
+        $scope.data = data;
+        $scope.elements = data.data.children;
+        console.log($scope.elements);
+    });
+
+    $scope.comments = function(element) {
+        $http({method:'get', url:'/static/comments.json'}).success(function(data) {
+            $scope.comments = data[1];
+            console.log($scope.comments);
+        });
+    };
+
+    $scope.comments();
+});
+
+</script>
+{% endblock %}

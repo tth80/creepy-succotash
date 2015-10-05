@@ -15,8 +15,8 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-
 import core.views
+
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
@@ -25,5 +25,7 @@ urlpatterns = [
     url(r'^blog/', include('blog.urls', namespace="blog")),
     url(r'^planner/', include('planner.urls', namespace="planner")),
     url(r'^api/', include('core.api_urls')),
+    url(r'^redtab/', include('redtab.urls')),
+
     url(r'^$', core.views.frontpage, name="frontpage"),
 ]

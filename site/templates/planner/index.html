@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 {% load humanize %}
 {% block head %}
 <style type="text/css">
@@ -35,7 +36,8 @@
 </style>
 {% endblock %}
 {% block full_content %}{% verbatim %}
-<div class="row" ng-controller="planController" style="margin-top:20px;">
+<div ng-controller="planController">
+<div class="row" style="margin-top:20px;">
     <div class="col-md-3">
         <ul class="list-group">
             <li class="list-group-item"
@@ -53,7 +55,9 @@
                 <div class="task-number">{{ $index+1 }}</div>
 
                 <div class="task-title">
-                    <strong>{{ item.title }}</strong> <small><a href="">edit</a></small>
+                    <a href="" data-toggle="modal"
+                        data-target="#editTask"
+                        ng-click="activate_task(item);"><strong class="">{{ item.title }}</strong></a>
                 </div>
 
                 <small class="info">type: idea | status: implemented</small>
@@ -69,16 +73,40 @@
     </div>
 </div>
 
-<div class="modal" id="modalNew" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+<div class="modal" id="editTask" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"
                     arial-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="modalLabel">Modal Title</h4>
+                <h4 class="modal-title" id="modalLabel">{{ active_task.title }}</h4>
             </div>
             <div class="modal-body">
-                asdf
+                <div class="form-group">
+                    <label for="taskTitle">Task title</label>
+                    <input type="text" class="form-control" id="taskTitle"
+                        placeholder="Task title" value="{{ active_task.title }}">
+                </div>
+                <div class="form-group">
+                    <label for="taskStatus">Task status</label>
+                    <div class="btn-group">
+                        <button class="btn btn-default">blaa</button>
+                        <button class="btn btn-active">blaa</button>
+                        <button class="btn btn-primary">blaa</button>
+                        <button class="btn">blaa</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="taskType">Task type</label>
+                    <input type="text" class="form-control" id="taskType"
+                        placeholder="Task title" value="{{ active_task.type }}">
+                </div>
+                <div class="form-group">
+                    <label for="taskBody">Task text</label>
+                    <textarea class="form-control" id="taskBody"
+                        placeholder="Task description here"
+                        value="{{ active_task.body }}"></textarea>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -86,6 +114,7 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 {% endverbatim %}{% endblock full_content %}
 {% block script %}
@@ -105,6 +134,12 @@ siteApp.controller('planController', function($scope, APIService, $http) {
         $scope.plan(id).success(function(obj) {
             $scope.active_project = obj;
         });
+    };
+
+    $scope.activate_task = function(task) {
+        $scope.active_task = task;
+        console.log('active task changed');
+        console.log(task);
     };
 
     $scope.plans().success(function(obj) {

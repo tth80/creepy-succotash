@@ -32,6 +32,7 @@ INSTALLED_APPS = (
     'core',
     'blog',
     'planner',
+    'redtab',
 )
 
 MIDDLEWARE_CLASSES = (
