@@ -3,7 +3,7 @@
 {% block head %}
 <style type="text/css">
     .link-group > li { clear:both; overflow:auto; }
-    .link-group > li > img { float:left; margin-right:5px; }
+    .link-group > li > img { float:left; padding-right:10px; }
     .link-group > li > .detail { float:right; margin-left:5px; }
 
     .link-group .subinfo { color:#808080; font-size:12px; }
@@ -21,7 +21,7 @@
 {% block full_content %}
     <div class="container" id="main-content" ng-controller="redtabController">
         <div class="row">
-            <div class="col-xs-12 col-md-3">
+            <div class="col-xs-12 col-md-5">
                 <ul class="list-group link-group">
                     <li ng-repeat="element in elements" class="list-group-item">
                         <img src="{% static 'img/50x50.png' %}">
@@ -72,23 +72,9 @@ siteApp.filter('nattime', function() {
         var ds = d.getTime() / 1000;
         var diff = cs - ds;
 
-        if(diff < 60) return 'just now';
-        if(diff < 60*2) return '<2m';
-        if(diff < 60*5) return '<5m';
-        if(diff < 60*10) return '<10m';
-        if(diff < 60*15) return '<15m';
-        if(diff < 60*30) return '<30m';
-        if(diff < 60*60) return '<1h';
-
-        if(diff < 60*60*24) {
-            var hrs = Math.floor(diff / 60 / 60);
-            if(hrs > 10) return hrs + 'h';
-
-            var mins = diff - (hrs * 60 * 60);
-            return hrs + 'h ' + mins + 'm';
-        }
-
-        return 'x' + d + 'x';
+        if(diff < 60*60) return Math.floor(diff/60) + 'm'; // less than hour, minutes
+        if(diff < 60*60*24) return Math.floor(diff/60/60) + 'h'; // less than day, hours
+        return Math.floor(diff/60/60/24) + 'd'; // days
     };
 });
 
