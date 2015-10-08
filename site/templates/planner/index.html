@@ -118,7 +118,7 @@
 </div>
 {% endverbatim %}{% endblock full_content %}
 {% block script %}
-<script type="text/javascript">
+<script type="text/javascript" async="async">
 
 siteApp.controller('planController', function($scope, APIService, $http) {
     $scope.plans = function() {
@@ -147,23 +147,6 @@ siteApp.controller('planController', function($scope, APIService, $http) {
         $scope.activate_project($scope.projects[0].id);
     });
 
-    /*
-    $scope.projects = [
-        {id:1, title:'planner project', status:'incomplete', created_at:'2015-09-24T12:59:01+1000',
-            tasks:[
-            {id:1, title:'achievements', type:'idea', status:'unknown', 'text': 'Lorem ipsum dolor itet'},
-            {id:2, title:'edit in place', type:'task', status:'unknown'},
-            {id:3, title:'associated people', type:'documentation', status:'unknown'},
-            {id:4, title:'link associated', type:'specification', status:'unknown'},
-            {id:5, title:'share', type:'', status:'unknown'},
-        ]},
-        {id:2, title:'scheduler', status:'', created_at:'', tasks:[]},
-        {id:3, title:'map generator', status:'', created_at:'', tasks:[]},
-        {id:4, title:'tower defense', status:'', created_at:'', tasks:[]},
-    ];
-    */
-
-    //$scope.activate_project(1);
 });
 
 </script>

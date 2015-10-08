@@ -47,26 +47,3 @@
 
         .btn.btn-default { background-color: #FF7700; border-color: #A84F00; color: #fff; text-shadow:1px 1px 1px #000; }
         .btn.btn-default:hover { background-color: #A84F00; }
-
-        /* front page */
-        #main-content { margin-top: 60px; }
-
-        body { background: #32383e; color:#c0c0c0; font-family: Roboto; }
-
-        .navbar { background: #21272d; border:none; }
-
-        .navbar a {
-            font-family: Roboto, sans-serif;
-            font-size: 14px;
-        }
-
-        .navbar a.navbar-brand span { color: #f0f0f0; }
-
-        h1,h2,h3,h4,h5,h6 { color: #e0e0e0; text-shadow: 2px 2px 5px #202020; }
-        small { color: #909090; }
-
-        /* #32383e hover */
-
-        .subinfo { margin-bottom:10px; }
-
-

@@ -28,6 +28,7 @@ INSTALLED_APPS = (
     'taggit',
     'registration',
     'rest_framework',
+    'compressor',
 
     'core',
     'blog',
@@ -89,6 +90,12 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, '../static/')
 
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
+)
+
 # Django-registration-redux
 
 # This is the number of days users will have to activate their accounts after
@@ -102,3 +109,5 @@ REGISTRATION_EMAIL_HTML = True
 REGISTRATION_AUTO_LOGIN = False
 
 TAGGIT_CASE_INSENSITIVE = True
+
+COMPRESS_ENABLED = True
