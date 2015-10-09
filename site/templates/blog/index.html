@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% load i18n %}
+
+{% block head %}
+    <style type="text/css">
+        input.query { padding-left: 35px; }
+
+        #query { margin-top:-20px; display:block; }
+        #query::before { position:relative; top:27px; left:10px; content:"🔍"; float:left; display:block; }
+
+    </style>
+{% endblock %}
+
+{% block content %}
+{% for post in posts %}
+    {% include 'blog/_post.html' with post=post %}
+    {% if not forloop.last %}<hr>{% endif %}
+{% endfor %}
+{% endblock %}
+{% block sidebar %}
+<div style="padding:20px 20px 0 20px;">
+<form action="" method="post">
+    {% csrf_token %}
+
+
+    <div class="form-group" style="">
+        <span id="query"><input type="text" name="query" class="form-control query"
+                            placeholder="{% trans "Search the blog" %}"></span>
+
+    </div>
+</form>
+
+
+<ul class="list">
+    {% for p in posts_sidebar %}
+    <li><a href="{% url 'blog:post' slug=p.slug %}">{{ p.title }}</a><br />
+        <div class="subinfo"><small>Posted: {{ p.created_at|naturaltime }} by <a href="">{{ p.author.username }}</a></small></div></li>
+    {% endfor %}
+</ul>
+</div>
+{% endblock %}

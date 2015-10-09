@@ -1,5 +1,1 @@
-$('.eip').on('click', function() {
-    var clone = $(this).clone();
-
-    console.log(clone);
-});
+../../site/core/static/js/eip.js

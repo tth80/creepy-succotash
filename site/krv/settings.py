@@ -91,8 +91,8 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, '../static/')
 
 STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'django.contrib.staticfiles.finders.FileSystemFinder',
     'compressor.finders.CompressorFinder',
 )
 
@@ -110,4 +110,4 @@ REGISTRATION_AUTO_LOGIN = False
 
 TAGGIT_CASE_INSENSITIVE = True
 
-COMPRESS_ENABLED = True
+COMPRESS_ENABLED = False 

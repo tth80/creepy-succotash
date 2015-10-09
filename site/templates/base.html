@@ -11,14 +11,13 @@
     <title>{% block title %}{% endblock %}</title>
     {% compress css %}
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" media="all"></link>
-    <link rel="stylesheet" href="{% static 'css/googlefonts.css' %}" media="all">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600">
     <link rel="stylesheet" href="{% static 'css/main.css' %}" media="all"></link>
-
     {% block head %}{% endblock head %}
     {% endcompress %}
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -27,26 +26,13 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Project <span>NAME</span></a>
+                <a class="navbar-brand" href="{% url 'frontpage' %}">at <span>SURFACE</span> .com</a>
             </div>
             <div id="navbar" class="collapse navbar-collapse navbar-right">
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="{% url 'frontpage' %}">{% trans "Home" %}</a></li>
                     <li><a href="{% url 'planner:index' %}">{% trans "Planner" %}</a></li>
-                    <li><a href="#" class="dropdown-toggle" data-toggle="dropdown"
-                        role="button" aria-haspopup="true"
-                        aria-expanded="false">{% trans "Blog" %} <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="{% url 'blog:index' %}">{% trans "Blog index" %}</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li class="dropdown-header">{% trans "Featured posts" %}</li>
-
-                            {% get_featured_blog_posts as featured %}
-                            {% for fp in featured %}
-                            <li><a href="{% url 'blog:post' slug=fp.slug %}">{{ fp.title|truncatechars:25 }}</a></li>
-                            {% endfor %}
-                        </ul>
-                    </li>
+                    <li><a href="{% url 'blog:index' %}">{% trans "Blog" %}</a></li>
                     <li><a href="#about">{% trans "About" %}</a></li>
                     <li><a href="#contact">{% trans "Contact" %}</a></li>
                 </ul>
@@ -55,6 +41,7 @@
     </nav>
 
     <div class="container" id="main-content">
+        {% comment %}
         <div class="row">
             <div class="col-md-12">
                 {% get_breadcrumbs as breadcrumbs %}
@@ -67,16 +54,19 @@
                 </ul>
             </div>
         </div>
+        {% endcomment %}
 
         {% block full_content %}
         <div class="row">
-            <div class="col-md-8 main-content">
+            <div class="col-md-8 content-area">
                 {% block content %}{% endblock %}
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 sidebar-area">
+                {% comment %}
                 <div class="" ng-if="user.username">{% verbatim %}
                     Hello {{ user.username }}!
                 {% endverbatim %}</div>
+                {% endcomment %}
 
                 {% block sidebar %}{% endblock %}
             </div>
@@ -85,17 +75,20 @@
     </div>
 
     {% compress js %}
-    <script src="{% static 'js/jquery.min.js' %}" async="async"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}" async="async"></script>
 
-    <script type="text/javascript" async="async">
+    <!--
+    <script src="{% static 'js/jquery.min.js' %}" ></script>
+    <script src="{% static 'js/bootstrap.min.js' %}" ></script>
+    -->
+
+    <script type="text/javascript" >
         $(document).ready(function() {
             $('.main-content table').addClass('table');
         });
     </script>
 
-    <script src="{% static 'js/angular.min.js' %}" async="async"></script>
-    <script src="{% static 'js/main.js' %}" async="async"></script>
+    <script src="{% static 'js/angular.min.js' %}" ></script>
+    <script src="{% static 'js/main.js' %}" ></script>
 
     {% block script %}{% endblock %}
     {% endcompress %}

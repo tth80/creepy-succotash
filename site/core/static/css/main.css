@@ -47,3 +47,51 @@
 
         .btn.btn-default { background-color: #FF7700; border-color: #A84F00; color: #fff; text-shadow:1px 1px 1px #000; }
         .btn.btn-default:hover { background-color: #A84F00; }
+
+        /* nav */
+        .navbar { background: #fff; border-top: 2px solid #337ab7; box-shadow: 1px 1px 6px #c0c0c0; }
+        .navbar a {
+            font-family: 'Open Sans', Helvetica, sans-serif;
+            font-size: 14px;
+        }
+        .navbar .navbar-brand { color: #414141; }
+        .navbar a.navbar-brand span { 
+            font-family: 'Open Sans', Helvetica;
+            font-weight:600;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* front page */
+
+        .content-area { margin-top: 60px; }
+        .sidebar-area { margin-top: 60px; }
+
+        html {
+            font-family: 'Open Sans', Helvetica;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body { background: #efefef; color:#333; }
+        p {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            color: #333;
+            font-size: 16px;
+            line-height: 1.7;
+            font-weight: 400;
+        }
+
+        .title { color: #4d4d4d; font-weight:600; }
+        .title a { color: #4d4d4d; text-decoration:none; }
+        .title a:hover { color: orange; }
+
+        small { font-family: 'Open Sans', Helvetica; font-size: 13px; font-weight:400; }
+
+        /* #32383e hover */
+
+        .subinfo { margin-bottom:10px; }
+
+        article small { display:block; }
+        article small.pubinfo { font-style:italic; margin-bottom:15px; }

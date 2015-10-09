@@ -1,0 +1,34 @@
+{% load humanize %}
+{% load core_tags %}
+{% load i18n %}
+<article id="post{{ post.id }}">
+    {% if full %}
+    <h2 class="title">{{ post.title }}</h2>
+    {% else %}
+    <h2 class="title"><a href="{% url 'blog:post' slug=post.slug %}">{{ post.title }}</a></h2>
+    {% endif %}
+    <small class="pubinfo">Published on {{ post.created_at|date:"F jS, Y g:iA O" }} 
+    by <a class="author" href="{% url 'blog:posts_by_author' author=post.author.username %}">{{ post.author.get_full_name }}.</a>
+    </small>
+
+    {% if full %}
+    <div>
+        {{ post.body|markdown|safe }}
+    </div>
+
+    <br />
+    <small id="comments">
+        Comments will be here..
+    </small>
+    {% else %}
+    <p>{{ post.body|truncatewords:100 }}</p>
+    <a href="">{% trans "Read more »" %}</a><br />
+    <small>
+        <a href="{% url 'blog:post' slug=post.slug %}#comments">2 Comments</a> | Tags: 
+        {% for tag in post.tags.all %}
+        <a href="/blog/tags/{{ tag }}/">{{ tag }}</a>
+        {% if not forloop.last %}, {% endif %}
+        {% endfor %}
+    </small>
+    {% endif %}
+</article>
