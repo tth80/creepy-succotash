@@ -35,35 +35,36 @@
     .task-item { margin-top: 25px; }
 </style>
 {% endblock %}
-{% block full_content %}{% verbatim %}
+{% block full_content %}
 <div ng-controller="planController">
 <div class="row" style="margin-top:20px;">
-    <div class="col-md-3">
-        <ul class="list-group">
-            <li class="list-group-item"
-                ng-repeat="proj in projects"
-                ng-class="{active:proj.active}"
-                ng-click="activate_project(proj.id);"><a href="">{{ proj.title }}</a></li>
-        </ul>
+    <div class="col-md-6 project content-area">
+        <h1>{{ plan.title }}</h1>
+        {% if plan.description %}<p>{{ plan.description }}</p>{% endif %}
 
-        <a href="" style="display:block;width:100%;text-align:center;">Create a new plan</a>
-    </div>
-    <div class="col-md-6 project">
-        <h1>{{ active_project.title }}</h1>
         <ol class="list-unstyled">
-            <li ng-repeat="item in active_project.tasks" class="task-item">
-                <div class="task-number">{{ $index+1 }}</div>
+            {% for task in plan.tasks.all %}
+            <li class="task-item">
+                <div class="task-number">{{ forloop.index }}</div>
 
                 <div class="task-title">
-                    <a href="" data-toggle="modal"
-                        data-target="#editTask"
-                        ng-click="activate_task(item);"><strong class="">{{ item.title }}</strong></a>
+                    <a href="" data-toggle="modal" data-target="#editTask"><strong>{{ task.title }}</strong></a>
                 </div>
 
                 <small class="info">type: idea | status: implemented</small>
-                <p>{{ item.text }}</p></li>
+                <p>{{ task.text }}</p></li>
+            {% endfor %}
         </ol>
 
+    </div>
+    <div class="col-md-3 sidebar-area">
+        <ul class="list-group">
+            {% for p in plans %}
+            <li class="list-group-item{% if p.id == plan.id %} active{% endif %}"><a href="">{{ p.title }}</a></li>
+            {% endfor %}
+        </ul>
+
+        <a href="{% url 'planner:new' %}" style="display:block;width:100%;text-align:center;">Create a new plan</a>
     </div>
     <div class="col-md-3">
         <h5>People associated in this plan</h5>
@@ -116,7 +117,7 @@
     </div>
 </div>
 </div>
-{% endverbatim %}{% endblock full_content %}
+{% endblock full_content %}
 {% block script %}
 <script type="text/javascript" async="async">
 
