@@ -10,6 +10,7 @@ PLAN_STATUS_CHOICES = (
 
 class Plan(models.Model):
     title = models.CharField(max_length=100)
+    description = models.TextField(blank=True, null=True)
     author = models.ForeignKey(User, related_name='plans')
     status = models.CharField(max_length=2, choices=PLAN_STATUS_CHOICES,
                               default='PE')
@@ -32,12 +33,21 @@ class Plan(models.Model):
         return {
             'id': self.id,
             'title': self.title,
+            'description': self.description,
             'status': self.get_status_display(),
             'created_at': self.created_at,
             'modified_at': self.created_at,
             'order': self.order,
             'tasks': [task.to_json() for task in self.tasks.all()],
             }
+
+    def get_max_order(user_id):
+        try:
+            max_order = Plan.objects.filter(author_id=user_id) \
+                .values('order').order_by('-order')[0]['order']
+        except:
+            max_order = -1
+        return max_order
 
 
 class Task(models.Model):
