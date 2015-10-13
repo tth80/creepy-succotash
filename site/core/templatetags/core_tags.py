@@ -2,6 +2,7 @@ from django import template
 from django.utils.translation import ugettext_lazy as _
 from markdown import markdown as markdown_func
 from blog.models import Post
+from planner.models import TaskSubtype
 
 
 register = template.Library()
@@ -46,3 +47,7 @@ def _get_crumbs_for_path(parts):
             path.append({'class':'', 'title': _('Index'), 'url': '/planner/'})
 
     return path
+
+@register.assignment_tag()
+def get_task_types():
+    return TaskSubtype.objects.all().order_by('order')

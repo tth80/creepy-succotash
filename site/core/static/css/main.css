@@ -45,8 +45,10 @@
         .modal-header { border-bottom-color: #303030; }
         .modal-footer { border-top-color: #303030; }
 
+        /*
         .btn.btn-default { background-color: #FF7700; border-color: #A84F00; color: #fff; text-shadow:1px 1px 1px #000; }
         .btn.btn-default:hover { background-color: #A84F00; }
+        */
 
         /* nav */
         .navbar { background: #fff; border-top: 2px solid #337ab7; box-shadow: 1px 1px 6px #c0c0c0; }

@@ -23,7 +23,7 @@ urlpatterns = [
     url(r'^accounts/', include('registration.backends.default.urls')),
 
     url(r'^blog/', include('blog.urls', namespace="blog")),
-    url(r'^planner/', include('planner.urls', namespace="planner")),
+    url(r'^plans/', include('planner.urls', namespace="planner")),
     url(r'^api/', include('core.api_urls')),
     url(r'^redtab/', include('redtab.urls')),
 
