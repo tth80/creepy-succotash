@@ -8,8 +8,12 @@ PLAN_STATUS_CHOICES = (
     ('PL', _('Planning')),
 )
 
+RESTRICTED_KEYWORDS = ('edit', 'new', 'delete', 'api')
+
+
 class Plan(models.Model):
     title = models.CharField(max_length=100)
+    slug = models.SlugField(max_length=50)
     description = models.TextField(blank=True, null=True)
     author = models.ForeignKey(User, related_name='plans')
     status = models.CharField(max_length=2, choices=PLAN_STATUS_CHOICES,
@@ -49,9 +53,14 @@ class Plan(models.Model):
             max_order = -1
         return max_order
 
+    class Meta:
+        unique_together = (('author', 'slug'),)
+
 
 class Task(models.Model):
     plan = models.ForeignKey(Plan, related_name='tasks')
+    slug = models.SlugField(max_length=50)
+
     title = models.CharField(max_length=100)
     body = models.TextField(blank=True, null=True)
     subtype = models.ForeignKey('TaskSubtype', related_name='tasks+')
@@ -74,10 +83,23 @@ class Task(models.Model):
             'created_at': self.created_at,
             'modified_at': self.modified_at,
             }
+    
+    def get_max_order(user_id):
+        try:
+            max_order = Task.objects.filter(plan__author_id=user_id) \
+                .values('order').order_by('-order')[0]['order']
+        except:
+            max_order = -1
+        return max_order
+
+    class Meta:
+        unique_together = (('plan', 'slug'),)
 
 
 class TaskSubtype(models.Model):
     name = models.CharField(max_length=50)
+    slug = models.SlugField(max_length=50, unique=True)
+    order = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return 'Task Subtype: #{}: {}'.format(self.id, self.name)

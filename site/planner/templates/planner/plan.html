@@ -2,19 +2,49 @@
 {% load staticfiles %}
 {% load humanize %}
 {% load core_tags %}
+{% load i18n %}
 {% block full_content %}
 <div ng-controller="planController">
 <div class="row" style="margin-top:20px;">
     <div class="col-md-9 project content-area">
-        <h1 class="title">plans</h1>
+        <h1 class="title">{{ plan.title }}</h1>
+        {% if plan.description %}<p>{{ plan.description }}</p>{% endif %}
 
-        <ul>
-            {% for plan in plans %}
-            <li><a href="{% url 'planner:plan' slug=plan.slug %}">{{ plan.title }}</a></li>
+        <ol class="list-unstyled">
+            {% for task in plan.tasks.all %}
+            <li class="task-item">
+                <div class="task-number">{{ forloop.index }}</div>
+
+                <div class="task-title">
+                    <a href="{% url 'planner:task' plan=plan.slug task=task.slug %}"><strong>{{ task.title }}</strong></a>
+                </div>
+
+                <small class="info">{{ task.subtype.name }} | {% trans "Status:" %} {{ task.status.name }}</small>
+                <p>{{ task.text }}</p></li>
             {% endfor %}
-        </ul>
+        </ol>
+
+        Add a new:
+        <div class="btn-group">
+            {% get_task_types as task_types %}
+            {% for task in task_types %}
+            <a href="{% url 'planner:task_create' slug=plan.slug type=task.slug %}" class="btn btn-default">{{ task.name }}</a>
+            {% endfor %}
+        </div>
+
     </div>
     <div class="col-md-3 sidebar-area">
+        <ul class="list-group">
+            {% for p in plans %}
+            <li class="list-group-item{% if p.id == plan.id %} active{% endif %}"><a href="">{{ p.title }}</a></li>
+            {% endfor %}
+        </ul>
+
+        <a href="{% url 'planner:new' %}" style="display:block;width:100%;text-align:center;">Create a new plan</a>
+        <h5>People associated in this plan</h5>
+
+        <button class="btn btn-primary" data-toggle="modal"
+            data-target="#modalNew">Create</button>
     </div>
 </div>
 
