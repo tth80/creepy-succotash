@@ -1,7 +1,8 @@
 from datetime import datetime
 
-from django.core.urlresolvers import reverse_lazy
-from django.forms import ModelForm
+from django.core.urlresolvers import reverse_lazy, reverse
+from django.forms import ModelForm, TextInput
+from django.forms.models import modelform_factory
 from django.views.generic.edit import CreateView, UpdateView
 from django.utils.text import slugify
 
@@ -9,8 +10,9 @@ from .models import Plan, Task, TaskSubtype, TaskStatus, RESTRICTED_KEYWORDS  # 
 
 class TaskCreate(CreateView):
     model = Task
-    fields = ['title', 'body', 'status']
-    success_url = reverse_lazy('planner:index')
+    form_class = modelform_factory(Task,
+            widgets={'title': TextInput(attrs={'placeholder': 'xxx', 'autofocus': 'autofocus'})},
+        fields=('title', 'body', 'status',))
 
     def get_form(self, form_class=None):
         form = super(TaskCreate, self).get_form(form_class)
@@ -43,6 +45,9 @@ class TaskCreate(CreateView):
             return False
 
         return super(TaskCreate, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse('planner:plan', kwargs={'plan': self.kwarg.get('plan')})
 
     """
     plan = models.ForeignKey(Plan, related_name='tasks')

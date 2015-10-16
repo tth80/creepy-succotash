@@ -15,8 +15,8 @@ def task(request, plan, task):
 
 
 @login_required
-def plan(request, slug):
-    plan = get_object_or_404(Plan, slug=slug, author_id=request.user.id)
+def plan(request, plan):
+    plan = get_object_or_404(Plan, slug=plan, author_id=request.user.id)
     return render(request, 'planner/plan.html', {'plan': plan})
 
 

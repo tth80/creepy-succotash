@@ -10,7 +10,7 @@
 
         <ul>
             {% for plan in plans %}
-            <li><a href="{% url 'planner:plan' slug=plan.slug %}">{{ plan.title }}</a></li>
+            <li><a href="{% url 'planner:plan' plan=plan.slug %}">{{ plan.title }}</a></li>
             {% endfor %}
         </ul>
     </div>
