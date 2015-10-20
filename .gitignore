@@ -5,3 +5,5 @@ __pycache__
 local_settings.py
 db.sqlite3
 static/CACHE
+*.sqlite3
+static/img/*
