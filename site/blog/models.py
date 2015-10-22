@@ -8,7 +8,7 @@ class Post(models.Model):
     title = models.CharField(max_length=255, unique=True)
     slug = models.SlugField(max_length=100, unique=True)
 
-    body = models.TextField(default='')
+    body = models.TextField(default='', blank=True, null=True)
 
     tags = TaggableManager(blank=True)
 
